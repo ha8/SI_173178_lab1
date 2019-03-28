@@ -18,4 +18,6 @@ cout <<"173178";
 
 int main () {
 	//TODO
+printMyName();
+printMyIndex();
 }
