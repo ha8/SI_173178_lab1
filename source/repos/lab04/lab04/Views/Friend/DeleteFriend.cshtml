@@ -1,0 +1,23 @@
+﻿@model List<lab04.Models.FriendModel>
+
+<tbody id="deleted">
+
+    @foreach (var m in Model)
+    {
+        <tr class="row">
+            s
+            <td class="col-3">@m.FriendIdentification</td>
+            <td class="col-5">@m.Ime</td>
+            <td class="col-2">@m.MestoZiveenje</td>
+            <td class="col-2">
+                <button type="button" class="btn btn-primary btn-block" onclick="location.href ='@Url.Action("EditFriend","Friend", new { id=m.FriendModelId })'">Edit</button>
+                @{
+                    string URL = String.Format("location.href ='@Url.Action(\"DeleteFriend\",\"Friend\",new {0})'", "{ id=" + m.FriendModelId + "}").ToString();
+                }
+                <button type="button" class="btn btn-primary btn-block" onclick="deleteWithAjax(@m.FriendModelId)">Delete</button>
+            </td>
+        </tr>
+    }
+
+</tbody>
+

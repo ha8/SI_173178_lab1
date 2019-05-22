@@ -1,0 +1,62 @@
+﻿@model List<lab04.Models.FriendModel>
+
+@{
+    ViewBag.Title = "AllFriends";
+}
+
+<h2>All Friends</h2>
+
+<table id="friends" class="table">
+    <thead>
+        <tr class="row">
+            <th class="col-sm-3">Friend ID.</th>
+            <th class="col-sm-5">Friend Name</th>
+            <th class="col-sm-2">Place</th>
+            <th class="col-sm-2"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model)
+        {
+            <tr class="row">
+                <td class="col-3">@m.FriendIdentification</td>
+                <td class="col-5">@m.Ime</td>
+                <td class="col-2">@m.MestoZiveenje</td>
+                <td class="col-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="location.href ='@Url.Action("EditFriend","Friend", new { id=m.FriendModelId })'">Edit</button>
+                    <button onclick="deleteWithAjax(this,@m.FriendModelId)" type="button" class="btn btn-primary btn-block">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+           $("#friends").DataTable();
+        });
+
+        function deleteWithAjax(button, id) {
+            var row = $(button).parent().parent().addClass("row-rowForDelete");
+            var prijatel = row.children("td:nth-child(2)").text();
+            if (confirm("Дали сте сигурни дека сакате да го избришете " + prijatel + "?"))
+            
+            $.ajax({
+                url: '@Url.Action("DeleteFriend","Friend")',
+                data: { id: id },
+                type: 'GET',
+                success: function () {
+                    row.remove().hide();
+                }
+
+            });
+            
+           
+        }
+
+    </script>
+
+}
